@@ -162,14 +162,14 @@ Micro.start(Articles, [Comments]);
 
 ## Create Producer:
 
-By default ** micro-kafka** does not create producer unless we ask for it.
+By default **micro-kafka** does not create producer unless we ask for it.
 
 ```ts
 import { SERVICE, Micro } from '@pestras/micro';
 import { MicroKafka, MicroKafkaEvents, TOPIC, EachMessagePayload } from '@pestras/micro-kafka';
 
 let kafka = new Microakafka(config);
-kafka.createProducer(consumerConfig);
+kafka.createProducer(producerConfig);
 
 Micro.plugin(kafka);
 
