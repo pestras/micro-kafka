@@ -1,10 +1,12 @@
 import { HealthState, Micro, MicroPlugin } from "@pestras/micro";
-import { Consumer, ConsumerConfig, ConsumerRunConfig, ConsumerSubscribeTopic, Kafka, KafkaConfig, Producer, ProducerConfig } from "kafkajs";
+import { Consumer, ConsumerConfig, EachMessagePayload, ConsumerRunConfig, ConsumerSubscribeTopic, Kafka, KafkaConfig, Producer, ProducerConfig } from "kafkajs";
 
 export interface MicroKafkaEvents {
   onCunsomerConnected?: () => void;
   onProducerConnected?: (producer: Producer) => void;
 }
+
+export { Producer, EachMessagePayload };
 
 export interface Topic {
   hooks?: string[];
@@ -18,7 +20,7 @@ export interface TopicConfig extends Topic {
 
 let serviceTopics: { [key: string]: TopicConfig } = {};
 
-export function TOPIC(name: string, options: Topic) {
+export function TOPIC(name: string, options: Topic = {}) {
   return (target: any, key: string) => {
     serviceTopics[name] = {
       hooks: options.hooks || [],
@@ -131,6 +133,10 @@ export class MicroKafka extends MicroPlugin implements HealthState {
 
       if (typeof Micro.service.onConsumerConnected === "function")
         Micro.service.onConsumerConnected();
+
+      for (let service of Micro.subServices)
+        if (typeof service.onConsumerConnected === "function")
+          service.onConsumerConnected();
     }
 
 
@@ -140,6 +146,10 @@ export class MicroKafka extends MicroPlugin implements HealthState {
 
       if (typeof Micro.service.onProducerConnected === "function")
         Micro.service.onProducerConnected(this.producer);
+
+      for (let service of Micro.subServices)
+        if (typeof service.onProducerConnected === "function")
+          service.onProducerConnected(this.producer);
     }
 
     this.healthy = true;

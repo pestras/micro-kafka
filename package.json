@@ -1,6 +1,6 @@
 {
   "name": "@pestras/micro-kafka",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "pestras microservice plugin for kafka messaging support",
   "main": "index.js",
   "types": "index.ts",
@@ -12,7 +12,6 @@
     "microservice",
     "typescript",
     "kafka",
-    "socketio",
     "cluster",
     "broker"
   ],
