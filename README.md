@@ -14,7 +14,7 @@ npm i @pestras/micro @pestras/micro-kafka
 import { SERVICE, Micro } from '@pestras/micro';
 import { MicroKafka } from '@pestras/micro-kafka;
 
-Micro.plugin(new Microakafka(config));
+Micro.plugin(new MicroKafka(config));
 
 @SERVICE()
 class test {}
@@ -25,6 +25,7 @@ Micro.start(Test);
 ### MicroKafka Parameters:
 
 Name              | Type              | Default       | Description
+----              | ----              | ----          | ----
 kafkaConfig       | KafkaConfig       | Required      | see [KafkaJs Client](https://kafka.js.org/docs/configuration)
 consumerConfig    | ConsumerConfig    | null          | see [KafkaJs Consumer](https://kafka.js.org/docs/consuming#a-name-options-a-options)
 ConsumerRunConfig | ConsumerRunConfig | null          | see [KafkaJs Consumer](https://kafka.js.org/docs/consuming)
@@ -35,7 +36,7 @@ Micro-kafka helps us consume topics by using **TOPIC** Decorator just like the f
 
 ```ts
 import { SERVICE, Micro } from '@pestras/micro';
-import { MicroKafka, TOPIC, EachMessagePayload } from '@pestras/micro-kafka;
+import { MicroKafka, TOPIC, EachMessagePayload } from '@pestras/micro-kafka';
 
 let kafka = new Microakafka(config);
 Micro.plugin(kafka);
@@ -165,7 +166,7 @@ By default ** micro-kafka** does not create producer unless we ask for it.
 
 ```ts
 import { SERVICE, Micro } from '@pestras/micro';
-import { MicroKafka, MicroKafkaEvents, TOPIC, EachMessagePayload } from '@pestras/micro-kafka;
+import { MicroKafka, MicroKafkaEvents, TOPIC, EachMessagePayload } from '@pestras/micro-kafka';
 
 let kafka = new Microakafka(config);
 kafka.createProducer(consumerConfig);
@@ -196,7 +197,7 @@ Called when kafka consumer is connected successfully
 
 ```ts
 import { SERVICE, Micro } from '@pestras/micro';
-import { MicroKafka, MicroKafkaEvents } from '@pestras/micro-kafka;
+import { MicroKafka, MicroKafkaEvents } from '@pestras/micro-kafka';
 
 let kafka = new Microakafka(config);
 
@@ -216,7 +217,7 @@ Called when kafka consumer is connected successfully
 
 ```ts
 import { SERVICE, Micro } from '@pestras/micro';
-import { MicroKafka, MicroKafkaEvents, Producer } from '@pestras/micro-kafka;
+import { MicroKafka, MicroKafkaEvents, Producer } from '@pestras/micro-kafka';
 
 let kafka = new Microakafka(config);
 kafka.createProducer(producerConfig);
