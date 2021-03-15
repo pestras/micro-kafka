@@ -8,7 +8,7 @@ export interface MicroKafkaEvents {
 
 export interface Topic {
   hooks?: string[];
-  subscribeOptions: Omit<ConsumerSubscribeTopic, "topic">;
+  subscribeOptions?: Omit<ConsumerSubscribeTopic, "topic">;
 }
 
 export interface TopicConfig extends Topic {
