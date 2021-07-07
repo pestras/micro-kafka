@@ -52,12 +52,7 @@ export class MicroKafka extends MicroPlugin implements HealthState {
   private async _initConsumers() {
     this._consumer = this._kafka.consumer(this._consumerConfig);
 
-    try {
-      await this._consumer.connect();
-    } catch (e) {
-      Micro.logger.error("error connecting consumer", e?.message || e);
-      throw e;
-    }
+    await this._consumer.connect();
 
     for (let topicName in serviceTopics) {
       let topic = serviceTopics[topicName];
@@ -102,7 +97,7 @@ export class MicroKafka extends MicroPlugin implements HealthState {
               }
             }
           } catch (e) {
-            return Micro.logger.error(`error in hook "${currentHook}"`, e?.message || e);
+            return Micro.logger.error(e, `error in hook "${currentHook}"`);
           }
 
           try {
@@ -112,7 +107,7 @@ export class MicroKafka extends MicroPlugin implements HealthState {
 
             Micro.logger.info(`topic '${topicName}' ended`);
           } catch (e) {
-            Micro.logger.error(`error in topic '${topicName}' handler '${topic.key}`, e?.message || e);
+            Micro.logger.error(e, `error in topic '${topicName}' handler '${topic.key}`);
           }
         }
       },
@@ -121,12 +116,7 @@ export class MicroKafka extends MicroPlugin implements HealthState {
   }
 
   async init() {
-    try {
-      this._kafka = new Kafka(this._config);
-    } catch (e) {
-      Micro.logger.error("error configuring kafka", e?.message || e);
-      throw e;
-    }
+    this._kafka = new Kafka(this._config);
 
     if (Object.keys(serviceTopics).length > 0) {
       await this._initConsumers();
